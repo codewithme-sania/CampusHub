@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>CampusHub - Login</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f5f1ea;
+    }
+
+    .login-container {
+        width: 400px;
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo {
+        text-align: center;
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .logo span {
+        color: #b8860b;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        color: #222;
+    }
+
+    .description {
+        text-align: center;
+        color: #777;
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: #b8860b;
+    }
+
+    .login-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        font-size: 14px;
+    }
+
+    .remember {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: normal;
+    }
+
+    .login-options a {
+        color: #b8860b;
+        text-decoration: none;
+    }
+
+    .login-submit {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: #222;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .login-submit:hover {
+        background: #b8860b;
+    }
+
+    .login-submit:disabled {
+        background: #888;
+        cursor: not-allowed;
+    }
+
+    #loginMessage {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 25px 0;
+        color: #999;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #ddd;
+    }
+
+    .signup-text {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .signup-text a {
+        color: #b8860b;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .back-home {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #555;
+        text-decoration: none;
+        font-size: 14px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="login-container">
+
+    <div class="logo">
+        Campus<span>Hub</span>
+    </div>
+
+    <h1>Welcome Back!</h1>
+
+    <p class="description">
+        Login to continue exploring campus opportunities.
+    </p>
+
+    <form id="loginForm">
+
+        <div class="input-group">
+            <label for="email">Email Address</label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+            >
+        </div>
+
+        <div class="login-options">
+
+            <label class="remember">
+                <input type="checkbox" id="remember">
+                Remember me
+            </label>
+
+            <a href="#" id="forgotPassword">
+                Forgot Password?
+            </a>
+
+        </div>
+
+        <button
+            type="submit"
+            class="login-submit"
+            id="loginButton"
+        >
+            Login
+        </button>
+
+    </form>
+
+    <p id="loginMessage" style="display: none;"></p>
+
+    <div class="divider">
+        <span>OR</span>
+    </div>
+
+    <p class="signup-text">
+        Don't have an account?
+        <a href="signup.html">Create Account</a>
+    </p>
+
+    <a href="../index.html" class="back-home">
+        ← Back to CampusHub
+    </a>
+
+</div>
+
+
+<script>
+
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const loginMessage = document.getElementById("loginMessage");
+
+
+    loginForm.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const remember =
+            document.getElementById("remember").checked;
+
+
+        loginButton.disabled = true;
+        loginButton.textContent = "Logging in...";
+
+        loginMessage.style.display = "none";
+
+
+        try {
+
+            const response = await fetch(
+                "http://127.0.0.1:5000/api/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || "Login failed."
+                );
+            }
+
+
+            const storage =
+                remember ? localStorage : sessionStorage;
+
+
+            storage.setItem(
+                "campusHubUser",
+                JSON.stringify(data.user)
+            );
+
+
+            loginMessage.textContent =
+                "Login successful! Redirecting...";
+
+            loginMessage.style.color = "green";
+            loginMessage.style.display = "block";
+
+
+            setTimeout(function() {
+
+                window.location.href = "../dashboard.html";
+
+            }, 1000);
+
+
+        } catch (error) {
+
+            console.error("Login error:", error);
+
+            if (error.message === "Failed to fetch") {
+
+                loginMessage.textContent =
+                    "Cannot connect to the server. Make sure Flask is running.";
+
+            } else {
+
+                loginMessage.textContent =
+                    error.message;
+
+            }
+
+            loginMessage.style.color = "red";
+            loginMessage.style.display = "block";
+
+        } finally {
+
+            loginButton.disabled = false;
+            loginButton.textContent = "Login";
+
+        }
+
+    });
+
+
+    document
+        .getElementById("forgotPassword")
+        .addEventListener("click", function(event) {
+
+            event.preventDefault();
+
+            alert("Password recovery is not available yet.");
+
+        });
+
+</script>
+```
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Post Opportunity | CampusHub</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .add-opportunity-page {
+            min-height: 100vh;
+            background: #f5f6fa;
+            padding: 40px 20px 60px;
+        }
+
+        .add-opportunity-container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .add-opportunity-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #5146c8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .add-opportunity-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .add-opportunity-heading h1 {
+            color: #202044;
+            margin-bottom: 10px;
+        }
+
+        .add-opportunity-heading p {
+            color: #666;
+        }
+
+        .opportunity-form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            border: 1px solid #d5d5e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #5146c8;
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .required {
+            color: #d33;
+        }
+
+        .form-note {
+            color: #777;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .form-btn {
+            padding: 13px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .post-btn {
+            background: #5146c8;
+            color: white;
+        }
+
+        .clear-btn {
+            background: #e7e7ed;
+            color: #333;
+        }
+
+        .form-message {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .success-message {
+            color: #16834a;
+        }
+
+        .error-message {
+            color: #d33;
+        }
+
+        @media (max-width: 650px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: auto;
+            }
+
+            .opportunity-form-card {
+                padding: 22px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="add-opportunity-page">
+
+        <div class="add-opportunity-container">
+
+            <a href="dashboard.html" class="add-opportunity-back">
+                ← Back to Dashboard
+            </a>
+
+            <div class="add-opportunity-heading">
+                <h1>Post an Opportunity</h1>
+                <p>Share a useful opportunity with CampusHub students.</p>
+            </div>
+
+            <section class="opportunity-form-card">
+
+                <form id="opportunityForm">
+
+                    <!-- Row 1 -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="title">
+                                Opportunity Title <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                placeholder="e.g. Software Engineering Internship"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">
+                                Category <span class="required">*</span>
+                            </label>
+
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Hackathon">Hackathon</option>
+                                <option value="Workshop">Workshop</option>
+                                <option value="Webinar">Webinar</option>
+                                <option value="Competition">Competition</option>
+                                <option value="Scholarship">Scholarship</option>
+                                <option value="Job">Job</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-row">
+
+                        <div class="form-group full-width">
+                            <label for="description">
+                                Description <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="description"
+                                placeholder="Describe the opportunity, eligibility, skills required, benefits, etc."
+                                required
+                            ></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="date">
+                                Date / Deadline <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="date"
+                                id="date"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">
+                                Location <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="location"
+                                placeholder="e.g. Bangalore / Online / Remote"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <label for="organizer">
+                                Organizer <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="organizer"
+                                placeholder="e.g. CampusHub Club"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="applicationLink">
+                                Application Link
+                            </label>
+
+                            <input
+                                type="url"
+                                id="applicationLink"
+                                placeholder="https://example.com/apply"
+                            >
+
+                            <span class="form-note">
+                                Optional — students can use this link to apply.
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="form-btn post-btn"
+                        >
+                            Post Opportunity
+                        </button>
+
+                        <button
+                            type="reset"
+                            class="form-btn clear-btn"
+                            id="clearBtn"
+                        >
+                            Clear
+                        </button>
+
+                    </div>
+
+                    <p
+                        id="formMessage"
+                        class="form-message"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        const opportunityForm =
+            document.getElementById("opportunityForm");
+
+        const formMessage =
+            document.getElementById("formMessage");
+
+        opportunityForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const title =
+                document.getElementById("title").value.trim();
+
+            const category =
+                document.getElementById("category").value;
+
+            const description =
+                document.getElementById("description").value.trim();
+
+            const date =
+                document.getElementById("date").value;
+
+            const location =
+                document.getElementById("location").value.trim();
+
+            const organizer =
+                document.getElementById("organizer").value.trim();
+
+            const applicationLink =
+                document.getElementById("applicationLink").value.trim();
+
+
+            // Create opportunity object
+
+            const newOpportunity = {
+
+                id: Date.now(),
+
+                title: title,
+
+                category: category,
+
+                description: description,
+
+                date: date,
+
+                location: location,
+
+                organizer: organizer,
+
+                applicationLink: applicationLink
+
+            };
+
+
+            // Get existing opportunities
+
+            const existingOpportunities =
+                JSON.parse(
+                    localStorage.getItem("campusHubOpportunities") || "[]"
+                );
+
+
+            // Add new opportunity
+
+            existingOpportunities.push(newOpportunity);
+
+
+            // Save updated opportunities
+
+            localStorage.setItem(
+                "campusHubOpportunities",
+                JSON.stringify(existingOpportunities)
+            );
+
+
+            // Show success message
+
+            formMessage.textContent =
+                "Opportunity posted successfully!";
+
+            formMessage.className =
+                "form-message success-message";
+
+
+            // Clear form
+
+            opportunityForm.reset();
+
+        });
+
+
+        // Clear button
+
+        document.getElementById("clearBtn")
+            .addEventListener("click", function() {
+
+                formMessage.textContent = "";
+
+                formMessage.className = "form-message";
+
+            });
+
+    </script>
+
+</body>
+</html>

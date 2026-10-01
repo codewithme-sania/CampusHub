@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Opportunities | CampusHub</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background: #f5f7fb;
+            color: #222;
+        }
+
+
+        nav {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        nav h2 {
+            font-size: 24px;
+        }
+
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+
+        .page-header {
+            text-align: center;
+            padding: 45px 20px 25px;
+        }
+
+
+        .page-header h1 {
+            font-size: 34px;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+
+        .search-section {
+            width: 85%;
+            max-width: 1100px;
+            margin: 10px auto 25px;
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .search-section input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+
+        .search-section input:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+
+        .search-section button {
+            padding: 14px 22px;
+            border: none;
+            border-radius: 8px;
+            background: #1e3a8a;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+
+        .search-section button:hover {
+            background: #162d6b;
+        }
+
+
+        .filters {
+            width: 85%;
+            max-width: 1100px;
+            margin: 0 auto 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: 1px solid #1e3a8a;
+            background: white;
+            color: #1e3a8a;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #1e3a8a;
+            color: white;
+        }
+
+
+        .post-section {
+            width: 85%;
+            max-width: 1100px;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+        .post-btn {
+            background: #16a34a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.2s;
+        }
+
+
+        .post-btn:hover {
+            background: #12813b;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           STATUS MESSAGE
+        ========================================= */
+
+        .status-message {
+            width: 85%;
+            max-width: 1100px;
+            margin: 0 auto 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+
+        .status-message.loading {
+            color: #1e3a8a;
+        }
+
+
+        .status-message.success {
+            color: #166534;
+        }
+
+
+        .status-message.error {
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+
+
+        /* =========================================
+           OPPORTUNITIES
+        ========================================= */
+
+        .opportunities-container {
+            width: 85%;
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding-bottom: 50px;
+        }
+
+
+        .opportunity-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+
+        .opportunity-card:hover {
+            transform: translateY(-5px);
+            box-shadow:
+                0 8px 22px rgba(0, 0, 0, 0.12);
+        }
+
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e3a8a;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+
+        .opportunity-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+
+        .opportunity-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+
+        .details-btn,
+        .save-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 12px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+
+        .details-btn {
+            background: #1e3a8a;
+            color: white;
+        }
+
+
+        .details-btn:hover {
+            background: #162d6b;
+        }
+
+
+        .save-btn {
+            background: #fef3c7;
+            color: #92400e;
+            border: none;
+        }
+
+
+        .save-btn:hover {
+            background: #fde68a;
+        }
+
+
+        .save-btn.saved {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+
+        /* =========================================
+           PROFESSIONAL EMPTY STATE
+        ========================================= */
+
+        .empty-message {
+            grid-column: 1 / -1;
+
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 55px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+
+            border: 1px solid #e5e7eb;
+
+            margin-bottom: 20px;
+        }
+
+
+        .empty-icon {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            background: #eff6ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+        }
+
+
+        .empty-message h2 {
+            margin-bottom: 10px;
+            color: #1f2937;
+            font-size: 22px;
+        }
+
+
+        .empty-message p {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+
+        .empty-action {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+
+        .empty-action:hover {
+            background: #162d6b;
+        }
+
+
+        /* =========================================
+           ERROR STATE
+        ========================================= */
+
+        .error-state {
+            grid-column: 1 / -1;
+
+            background: white;
+
+            border: 1px solid #fecaca;
+
+            border-radius: 14px;
+
+            padding: 50px 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .error-icon {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 50%;
+
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        .error-state h2 {
+            color: #991b1b;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+
+
+        .error-state p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+
+        .retry-btn {
+            border: none;
+
+            background: #1e3a8a;
+
+            color: white;
+
+            padding: 10px 20px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        .retry-btn:hover {
+            background: #162d6b;
+        }
+
+
+        footer {
+            background: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+
+        @media (max-width: 600px) {
+
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+
+            nav a {
+                margin-left: 8px;
+                margin-right: 8px;
+            }
+
+
+            .search-section {
+                flex-direction: column;
+            }
+
+
+            .search-section button {
+                width: 100%;
+            }
+
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+
+            .button-row {
+                flex-direction: column;
+            }
+
+
+            .empty-message,
+            .error-state {
+                padding: 40px 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <h2>
+            CampusHub
+        </h2>
+
+
+        <div>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="events.html">
+                Events
+            </a>
+
+            <a href="saved.html">
+                Saved
+            </a>
+
+            <a href="profile.html">
+                Profile
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- HEADER -->
+
+    <section class="page-header">
+
+        <h1>
+            Explore Opportunities
+        </h1>
+
+        <p>
+            Discover internships, hackathons,
+            workshops, webinars and more.
+        </p>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <section class="search-section">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search opportunities..."
+        >
+
+
+        <button onclick="searchOpportunities()">
+            Search
+        </button>
+
+    </section>
+
+
+    <!-- FILTERS -->
+
+    <section class="filters">
+
+        <button
+            class="filter-btn active"
+            data-category="All"
+            onclick="filterCategory('All')">
+            All
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Internship"
+            onclick="filterCategory('Internship')">
+            Internships
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Hackathon"
+            onclick="filterCategory('Hackathon')">
+            Hackathons
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Workshop"
+            onclick="filterCategory('Workshop')">
+            Workshops
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Webinar"
+            onclick="filterCategory('Webinar')">
+            Webinars
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Competition"
+            onclick="filterCategory('Competition')">
+            Competitions
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Scholarship"
+            onclick="filterCategory('Scholarship')">
+            Scholarships
+        </button>
+
+
+        <button
+            class="filter-btn"
+            data-category="Job"
+            onclick="filterCategory('Job')">
+            Jobs
+        </button>
+
+    </section>
+
+
+    <!-- POST -->
+
+    <section class="post-section">
+
+        <a
+            href="post.html"
+            class="post-btn">
+
+            + Post Opportunity
+
+        </a>
+
+    </section>
+
+
+    <!-- STATUS -->
+
+    <div
+        id="statusMessage"
+        class="status-message loading">
+
+        Loading opportunities...
+
+    </div>
+
+
+    <!-- OPPORTUNITIES -->
+
+    <section
+        id="opportunitiesContainer"
+        class="opportunities-container">
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 CampusHub |
+            Connecting Students with Opportunities
+        </p>
+
+    </footer>
+
+
+    <script>
+
+
+        const API_URL =
+            "http://127.0.0.1:5000";
+
+
+        let allOpportunities = [];
+
+
+        let currentCategory = "All";
+
+
+        /* =====================================================
+           GET CURRENT USER
+        ===================================================== */
+
+        function getCurrentUser() {
+
+            const storedUser =
+                localStorage.getItem(
+                    "campushubUser"
+                );
+
+
+            if (!storedUser) {
+
+                return null;
+
+            }
+
+
+            try {
+
+                return JSON.parse(
+                    storedUser
+                );
+
+            } catch (error) {
+
+                return null;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           LOAD OPPORTUNITIES
+        ===================================================== */
+
+        async function loadOpportunities() {
+
+            const status =
+                document.getElementById(
+                    "statusMessage"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL +
+                        "/api/opportunities"
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load opportunities."
+                    );
+
+                }
+
+
+                allOpportunities =
+                    data.opportunities;
+
+
+                status.className =
+                    "status-message success";
+
+
+                status.textContent =
+                    allOpportunities.length +
+                    (
+                        allOpportunities.length === 1
+                            ? " opportunity available"
+                            : " opportunities available"
+                    );
+
+
+                displayOpportunities();
+
+            }
+
+
+            catch (error) {
+
+                console.error(error);
+
+
+                status.className =
+                    "status-message error";
+
+
+                status.textContent =
+                    "Unable to connect to CampusHub server.";
+
+
+                document.getElementById(
+                    "opportunitiesContainer"
+                ).innerHTML = `
+
+                    <div class="error-state">
+
+                        <div class="error-icon">
+                            !
+                        </div>
+
+                        <h2>
+                            Unable to load opportunities
+                        </h2>
+
+                        <p>
+                            We couldn't connect to the
+                            CampusHub server right now.
+                            Please make sure Flask is running
+                            and try again.
+                        </p>
+
+                        <button
+                            class="retry-btn"
+                            onclick="loadOpportunities()"
+                        >
+                            Try Again
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           DISPLAY OPPORTUNITIES
+        ===================================================== */
+
+        function displayOpportunities() {
+
+            const container =
+                document.getElementById(
+                    "opportunitiesContainer"
+                );
+
+
+            const searchText =
+                document.getElementById(
+                    "searchInput"
+                )
+                .value
+                .toLowerCase()
+                .trim();
+
+
+            const filtered =
+                allOpportunities.filter(
+                    function(opportunity) {
+
+
+                        const matchesCategory =
+                            currentCategory === "All" ||
+                            opportunity.category
+                                .toLowerCase() ===
+                            currentCategory.toLowerCase();
+
+
+                        const searchableText = (
+
+                            opportunity.title +
+                            " " +
+                            opportunity.category +
+                            " " +
+                            opportunity.description +
+                            " " +
+                            opportunity.location +
+                            " " +
+                            opportunity.organizer
+
+                        ).toLowerCase();
+
+
+                        const matchesSearch =
+                            searchableText.includes(
+                                searchText
+                            );
+
+
+                        return (
+                            matchesCategory &&
+                            matchesSearch
+                        );
+
+                    }
+                );
+
+
+            container.innerHTML = "";
+
+
+            /* =============================================
+               PROFESSIONAL EMPTY SEARCH/FILTER STATE
+            ============================================= */
+
+            if (filtered.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="empty-message">
+
+                        <div class="empty-icon">
+                            🔎
+                        </div>
+
+                        <h2>
+                            No opportunities found
+                        </h2>
+
+                        <p>
+                            We couldn't find any opportunities
+                            matching your search or selected category.
+                            Try a different keyword or choose another category.
+                        </p>
+
+                        <a
+                            href="opportunities.html"
+                            class="empty-action"
+                        >
+                            View All Opportunities
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            filtered.forEach(
+                function(opportunity) {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "opportunity-card";
+
+
+                    card.innerHTML = `
+
+                        <span class="badge">
+
+                            ${escapeHTML(
+                                opportunity.category
+                            )}
+
+                        </span>
+
+
+                        <h3>
+
+                            ${escapeHTML(
+                                opportunity.title
+                            )}
+
+                        </h3>
+
+
+                        <p>
+
+                            <strong>
+                                Date:
+                            </strong>
+
+                            ${escapeHTML(
+                                opportunity.date
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Location:
+                            </strong>
+
+                            ${escapeHTML(
+                                opportunity.location
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            <strong>
+                                Organizer:
+                            </strong>
+
+                            ${escapeHTML(
+                                opportunity.organizer
+                            )}
+
+                        </p>
+
+
+                        <p>
+
+                            ${escapeHTML(
+                                opportunity.description
+                            )}
+
+                        </p>
+
+
+                        <div class="button-row">
+
+
+                            <button
+                                class="save-btn"
+                                id="save-${opportunity.id}"
+                                onclick="saveOpportunity(${opportunity.id})"
+                            >
+
+                                🔖 Save
+
+                            </button>
+
+
+                            ${
+                                opportunity.application_link
+                                ?
+                                `
+                                    <a
+                                        href="${escapeAttribute(
+                                            opportunity.application_link
+                                        )}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="details-btn"
+                                    >
+                                        Apply
+                                    </a>
+                                `
+                                :
+                                `
+                                    <span
+                                        class="details-btn"
+                                        style="
+                                            background:#9ca3af;
+                                            cursor:default;
+                                        "
+                                    >
+                                        No Link
+                                    </span>
+                                `
+                            }
+
+
+                        </div>
+
+                    `;
+
+
+                    container.appendChild(card);
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           SAVE OPPORTUNITY
+        ===================================================== */
+
+        async function saveOpportunity(
+            opportunityId
+        ) {
+
+            const user =
+                getCurrentUser();
+
+
+            if (!user) {
+
+                alert(
+                    "Please login before saving an opportunity."
+                );
+
+                window.location.href =
+                    "backend/login.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL +
+                        "/api/bookmarks",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                user_id:
+                                    user.id,
+
+                                opportunity_id:
+                                    opportunityId
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    alert(
+                        data.message ||
+                        "Unable to save opportunity."
+                    );
+
+                    return;
+
+                }
+
+
+                const button =
+                    document.getElementById(
+                        "save-" +
+                        opportunityId
+                    );
+
+
+                button.textContent =
+                    "✓ Saved";
+
+
+                button.classList.add(
+                    "saved"
+                );
+
+
+                button.disabled = true;
+
+
+                alert(
+                    "Opportunity saved successfully!"
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Cannot connect to the server."
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        function searchOpportunities() {
+
+            displayOpportunities();
+
+        }
+
+
+        /* =====================================================
+           FILTER
+        ===================================================== */
+
+        function filterCategory(
+            category
+        ) {
+
+            currentCategory =
+                category;
+
+
+            document
+                .querySelectorAll(
+                    ".filter-btn"
+                )
+                .forEach(
+                    function(button) {
+
+                        button.classList.remove(
+                            "active"
+                        );
+
+
+                        if (
+                            button.dataset.category ===
+                            category
+                        ) {
+
+                            button.classList.add(
+                                "active"
+                            );
+
+                        }
+
+                    }
+                );
+
+
+            displayOpportunities();
+
+        }
+
+
+        /* =====================================================
+           ENTER SEARCH
+        ===================================================== */
+
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        searchOpportunities();
+
+                    }
+
+                }
+            );
+
+
+        /* =====================================================
+           SECURITY
+        ===================================================== */
+
+        function escapeHTML(text) {
+
+            if (
+                text === null ||
+                text === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(text)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        function escapeAttribute(text) {
+
+            if (
+                text === null ||
+                text === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(text)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                );
+
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        loadOpportunities();
+
+
+    </script>
+
+
+</body>
+
+</html>

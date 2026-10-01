@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Opportunity Details | CampusHub</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .details-page {
+            min-height: 100vh;
+            background: #f5f6fa;
+            padding: 40px 20px 60px;
+        }
+
+        .details-container {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .details-back {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #5146c8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .details-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .details-category {
+            display: inline-block;
+            background: #eeeefb;
+            color: #5146c8;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .posted-badge {
+            display: inline-block;
+            background: #e8f7ef;
+            color: #16834a;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .details-card h1 {
+            color: #202044;
+            font-size: 32px;
+            margin: 5px 0 25px;
+        }
+
+        .details-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            background: #f7f7fb;
+            padding: 15px;
+            border-radius: 9px;
+        }
+
+        .info-box strong {
+            display: block;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .info-box span {
+            color: #666;
+        }
+
+        .details-description {
+            margin-top: 25px;
+        }
+
+        .details-description h2 {
+            color: #202044;
+            margin-bottom: 10px;
+        }
+
+        .details-description p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .details-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .details-btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .apply-btn {
+            background: #5146c8;
+            color: white;
+        }
+
+        .save-btn {
+            background: #16834a;
+            color: white;
+        }
+
+        .saved-btn {
+            background: #777;
+            color: white;
+        }
+
+        .not-found {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .not-found h1 {
+            color: #202044;
+        }
+
+        .not-found p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .not-found a {
+            display: inline-block;
+            background: #5146c8;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .message {
+            margin-top: 18px;
+            color: #16834a;
+            font-weight: 600;
+        }
+
+        @media (max-width: 650px) {
+            .details-card {
+                padding: 22px;
+            }
+
+            .details-info {
+                grid-template-columns: 1fr;
+            }
+
+            .details-card h1 {
+                font-size: 25px;
+            }
+
+            .details-actions {
+                flex-direction: column;
+            }
+
+            .details-btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <main class="details-page">
+
+        <div class="details-container">
+
+            <a href="opportunities.html" class="details-back">
+                ← Back to Opportunities
+            </a>
+
+            <section id="detailsContent">
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /*
+         * Original CampusHub demo opportunities
+         */
+
+        const defaultOpportunities = [
+
+            {
+                id: "default-1",
+                title: "National Innovation Hackathon",
+                category: "Hackathon",
+                description:
+                    "Participate in an innovation-focused hackathon and build creative technology solutions.",
+                date: "15 October 2026",
+                location: "Online",
+                organizer: "CampusHub",
+                applicationLink: "",
+                isPosted: false
+            },
+
+            {
+                id: "default-2",
+                title: "Software Engineering Internship",
+                category: "Internship",
+                description:
+                    "Gain practical software development experience through an internship opportunity.",
+                date: "20 October 2026",
+                location: "Bangalore",
+                organizer: "CampusHub",
+                applicationLink: "",
+                isPosted: false
+            },
+
+            {
+                id: "default-3",
+                title: "AI & Future Technology",
+                category: "Webinar",
+                description:
+                    "Learn about artificial intelligence and emerging technologies from industry speakers.",
+                date: "18 October 2026",
+                location: "Online",
+                organizer: "CampusHub",
+                applicationLink: "",
+                isPosted: false
+            },
+
+            {
+                id: "default-4",
+                title: "Web Development Workshop",
+                category: "Workshop",
+                description:
+                    "Learn the fundamentals of modern web development through a practical workshop.",
+                date: "22 October 2026",
+                location: "Campus",
+                organizer: "CampusHub",
+                applicationLink: "",
+                isPosted: false
+            },
+
+            {
+                id: "default-5",
+                title: "Student Tech Challenge",
+                category: "Hackathon",
+                description:
+                    "Take part in a student technology challenge and showcase your problem-solving skills.",
+                date: "28 October 2026",
+                location: "Online",
+                organizer: "CampusHub",
+                applicationLink: "",
+                isPosted: false
+            },
+
+            {
+                id: "default-6",
+                title: "Frontend Developer Internship",
+                category: "Internship",
+                description:
+                    "Build frontend development skills through a practical internship experience.",
+                date: "30 October 2026",
+                location: "Remote",
+                organizer: "CampusHub",
+                applicationLink: "",
+                isPosted: false
+            }
+
+        ];
+
+
+        /*
+         * Get opportunities posted by the user.
+         */
+
+        function getPostedOpportunities() {
+
+            const saved =
+                JSON.parse(
+                    localStorage.getItem("campusHubOpportunities") || "[]"
+                );
+
+            return saved.map(function(opportunity) {
+
+                return {
+                    ...opportunity,
+                    isPosted: true
+                };
+
+            });
+
+        }
+
+
+        /*
+         * Combine all opportunities.
+         */
+
+        function getAllOpportunities() {
+
+            return [
+                ...defaultOpportunities,
+                ...getPostedOpportunities()
+            ];
+
+        }
+
+
+        /*
+         * Get the title from the URL.
+         */
+
+        const urlParams =
+            new URLSearchParams(window.location.search);
+
+        const opportunityTitle =
+            urlParams.get("title");
+
+
+        /*
+         * Find the selected opportunity.
+         */
+
+        const allOpportunities =
+            getAllOpportunities();
+
+        const opportunity =
+            allOpportunities.find(function(item) {
+
+                return item.title === opportunityTitle;
+
+            });
+
+
+        const detailsContent =
+            document.getElementById("detailsContent");
+
+
+        /*
+         * If opportunity doesn't exist.
+         */
+
+        if (!opportunity) {
+
+            detailsContent.innerHTML = `
+
+                <div class="details-card not-found">
+
+                    <h1>Opportunity Not Found</h1>
+
+                    <p>
+                        The opportunity you're looking for
+                        could not be found.
+                    </p>
+
+                    <a href="opportunities.html">
+                        Browse Opportunities
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /*
+         * Display opportunity details.
+         */
+
+        else {
+
+            const postedBadge =
+                opportunity.isPosted
+                    ? `<span class="posted-badge">
+                        Added by CampusHub
+                       </span>`
+                    : "";
+
+
+            detailsContent.innerHTML = `
+
+                <div class="details-card">
+
+                    <div>
+
+                        <span class="details-category">
+                            ${escapeHTML(opportunity.category)}
+                        </span>
+
+                        ${postedBadge}
+
+                    </div>
+
+
+                    <h1>
+                        ${escapeHTML(opportunity.title)}
+                    </h1>
+
+
+                    <div class="details-info">
+
+                        <div class="info-box">
+
+                            <strong>
+                                Date / Deadline
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(opportunity.date)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <strong>
+                                Location
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(opportunity.location)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <strong>
+                                Category
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(opportunity.category)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="info-box">
+
+                            <strong>
+                                Organizer
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(opportunity.organizer)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="details-description">
+
+                        <h2>
+                            About this Opportunity
+                        </h2>
+
+                        <p>
+                            ${escapeHTML(opportunity.description)}
+                        </p>
+
+                    </div>
+
+
+                    <div class="details-actions">
+
+                        <button
+                            class="details-btn apply-btn"
+                            id="applyBtn">
+                            Apply Now
+                        </button>
+
+
+                        <button
+                            class="details-btn save-btn"
+                            id="saveBtn">
+                            Save Opportunity
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        id="message"
+                        class="message">
+                    </p>
+
+                </div>
+
+            `;
+
+
+            /*
+             * Apply button
+             */
+
+            document
+                .getElementById("applyBtn")
+                .addEventListener("click", function() {
+
+                    if (opportunity.applicationLink) {
+
+                        window.open(
+                            opportunity.applicationLink,
+                            "_blank"
+                        );
+
+                    }
+
+                    else {
+
+                        alert(
+                            "Application link will be available soon!"
+                        );
+
+                    }
+
+                });
+
+
+            /*
+             * Save button
+             */
+
+            const saveBtn =
+                document.getElementById("saveBtn");
+
+            const message =
+                document.getElementById("message");
+
+
+            function getSavedOpportunities() {
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        "savedOpportunities"
+                    ) || "[]"
+                );
+
+            }
+
+
+            function isAlreadySaved() {
+
+                const saved =
+                    getSavedOpportunities();
+
+                return saved.some(function(item) {
+
+                    return item.title === opportunity.title;
+
+                });
+
+            }
+
+
+            function updateSaveButton() {
+
+                if (isAlreadySaved()) {
+
+                    saveBtn.textContent =
+                        "Already Saved";
+
+                    saveBtn.classList.remove("save-btn");
+
+                    saveBtn.classList.add("saved-btn");
+
+                }
+
+                else {
+
+                    saveBtn.textContent =
+                        "Save Opportunity";
+
+                    saveBtn.classList.remove("saved-btn");
+
+                    saveBtn.classList.add("save-btn");
+
+                }
+
+            }
+
+
+            updateSaveButton();
+
+
+            saveBtn.addEventListener("click", function() {
+
+                const saved =
+                    getSavedOpportunities();
+
+
+                if (isAlreadySaved()) {
+
+                    message.textContent =
+                        "This opportunity is already saved.";
+
+                    return;
+
+                }
+
+
+                saved.push({
+
+                    id: opportunity.id,
+
+                    title: opportunity.title,
+
+                    category: opportunity.category,
+
+                    date: opportunity.date,
+
+                    location: opportunity.location,
+
+                    organizer: opportunity.organizer,
+
+                    description: opportunity.description,
+
+                    applicationLink:
+                        opportunity.applicationLink
+
+                });
+
+
+                localStorage.setItem(
+                    "savedOpportunities",
+                    JSON.stringify(saved)
+                );
+
+
+                message.textContent =
+                    "Opportunity saved successfully!";
+
+
+                updateSaveButton();
+
+            });
+
+        }
+
+
+        /*
+         * Protect displayed user-entered text.
+         */
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+    </script>
+
+</body>
+
+</html>

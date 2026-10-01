@@ -1,0 +1,493 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Saved Opportunities - CampusHub</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVIGATION BAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CampusHub
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="opportunities.html">
+                Opportunities
+            </a>
+
+            <a href="events.html">
+                Events
+            </a>
+
+            <a href="saved.html">
+                Saved
+            </a>
+
+            <a href="index.html"
+               class="nav-button">
+                Home
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         SAVED OPPORTUNITIES
+    ========================== -->
+
+    <section class="saved-container">
+
+        <div class="saved-header">
+
+            <h1>
+                Saved Opportunities 💾
+            </h1>
+
+            <p>
+                Keep track of opportunities you
+                want to explore later.
+            </p>
+
+        </div>
+
+
+
+        <!-- Saved Cards -->
+
+        <div
+            class="saved-grid"
+            id="savedGrid">
+
+        </div>
+
+
+
+        <!-- Empty Message -->
+
+        <div
+            class="empty-saved"
+            id="emptySaved">
+
+            <div class="empty-icon">
+                💾
+            </div>
+
+            <h2>
+                No Saved Opportunities
+            </h2>
+
+            <p>
+                You haven't saved any opportunities yet.
+            </p>
+
+            <a
+                href="opportunities.html"
+                class="browse-button">
+
+                Browse Opportunities
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+
+        /* =========================
+           LOAD SAVED OPPORTUNITIES
+        ========================== */
+
+        async function loadSavedOpportunities() {
+
+
+            const savedGrid =
+                document.getElementById("savedGrid");
+
+
+            const emptySaved =
+                document.getElementById("emptySaved");
+
+
+            savedGrid.innerHTML = "";
+
+
+            /* =========================
+               GET LOGGED-IN USER
+            ========================== */
+
+            const user =
+                JSON.parse(
+                    localStorage.getItem("campushubUser")
+                );
+
+
+            if (!user || !user.id) {
+
+                emptySaved.style.display = "block";
+
+                savedGrid.innerHTML = `
+
+                    <div style="
+                        text-align:center;
+                        width:100%;
+                        padding:30px;
+                    ">
+
+                        <h2>
+                            Please login first
+                        </h2>
+
+                        <p>
+                            You need to login to view your saved opportunities.
+                        </p>
+
+                        <a
+                            href="backend/login.html"
+                            class="browse-button">
+
+                            Login
+
+                        </a>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+
+            /* =========================
+               GET SAVED DATA FROM FLASK
+            ========================== */
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/bookmarks/" +
+                        user.id
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+
+                /* =========================
+                   CHECK RESPONSE
+                ========================== */
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load saved opportunities."
+                    );
+
+                }
+
+
+
+                const saved =
+                    data.opportunities || [];
+
+
+
+                /* =========================
+                   CHECK IF EMPTY
+                ========================== */
+
+                if (saved.length === 0) {
+
+                    emptySaved.style.display = "block";
+
+                    return;
+
+                }
+
+
+                emptySaved.style.display = "none";
+
+
+
+                /* =========================
+                   CREATE SAVED CARDS
+                ========================== */
+
+                saved.forEach(function(opportunity) {
+
+
+                    const card =
+                        document.createElement("div");
+
+
+                    card.className =
+                        "saved-card";
+
+
+                    card.innerHTML = `
+
+                        <span class="saved-tag">
+                            ${escapeHTML(opportunity.category)}
+                        </span>
+
+                        <h2>
+                            ${escapeHTML(opportunity.title)}
+                        </h2>
+
+                        <p>
+                            📅 ${escapeHTML(opportunity.date || "Not specified")}
+                        </p>
+
+                        <p>
+                            📍 ${escapeHTML(opportunity.location || "Not specified")}
+                        </p>
+
+                        <div class="saved-actions">
+
+                            <button
+                                onclick="viewOpportunity(${opportunity.id})">
+
+                                View Details
+
+                            </button>
+
+                            <button
+                                class="remove-button"
+                                onclick="removeOpportunity(${opportunity.id})">
+
+                                Remove
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+
+                    savedGrid.appendChild(card);
+
+                });
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading saved opportunities:",
+                    error
+                );
+
+
+                emptySaved.style.display = "block";
+
+
+                savedGrid.innerHTML = `
+
+                    <div style="
+                        text-align:center;
+                        width:100%;
+                        padding:30px;
+                    ">
+
+                        <h2>
+                            Unable to load saved opportunities
+                        </h2>
+
+                        <p>
+                            ${escapeHTML(error.message)}
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+
+        /* =========================
+           VIEW OPPORTUNITY
+        ========================== */
+
+        function viewOpportunity(id) {
+
+            window.location.href =
+                "opportunity-details.html?id=" +
+                encodeURIComponent(id);
+
+        }
+
+
+
+        /* =========================
+           REMOVE OPPORTUNITY
+        ========================== */
+
+        async function removeOpportunity(opportunityId) {
+
+
+            const user =
+                JSON.parse(
+                    localStorage.getItem("campushubUser")
+                );
+
+
+            if (!user || !user.id) {
+
+                alert("Please login first.");
+
+                return;
+
+            }
+
+
+
+            const confirmed =
+                confirm(
+                    "Remove this opportunity from your saved list?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/api/bookmarks/" +
+                        user.id +
+                        "/" +
+                        opportunityId,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+
+                if (!response.ok || !data.success) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to remove opportunity."
+                    );
+
+                }
+
+
+
+                alert(
+                    "Opportunity removed from saved."
+                );
+
+
+                loadSavedOpportunities();
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error removing bookmark:",
+                    error
+                );
+
+
+                alert(
+                    "Error: " +
+                    error.message
+                );
+
+            }
+
+        }
+
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================== */
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+
+        }
+
+
+
+        /* =========================
+           LOAD PAGE
+        ========================== */
+
+        loadSavedOpportunities();
+
+    </script>
+
+
+</body>
+
+</html>
+```

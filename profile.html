@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CampusHub</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .profile-page {
+            min-height: 100vh;
+            padding: 50px 20px;
+            background: #f5f6fa;
+        }
+
+        .profile-container {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .profile-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-heading h1 {
+            color: #202044;
+            margin-bottom: 10px;
+        }
+
+        .profile-heading p {
+            color: #666;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #e8e8ff;
+            color: #5146c8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .profile-name {
+            text-align: center;
+            color: #202044;
+            margin-bottom: 30px;
+        }
+
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .profile-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .profile-field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .profile-field label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profile-field input,
+        .profile-field textarea,
+        .profile-field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5d5e0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .profile-field input:disabled,
+        .profile-field textarea:disabled,
+        .profile-field select:disabled {
+            background: #f3f3f6;
+            color: #555;
+        }
+
+        .profile-field textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .profile-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .profile-btn {
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            background: #5146c8;
+            color: white;
+        }
+
+        .save-btn {
+            background: #16834a;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #e7e7ed;
+            color: #333;
+        }
+
+        .profile-message {
+            text-align: center;
+            margin-top: 18px;
+            color: #16834a;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #5146c8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-field.full-width {
+                grid-column: auto;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .profile-actions {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="profile-page">
+        <div class="profile-container">
+
+            <a href="dashboard.html" class="back-link">
+                ← Back to Dashboard
+            </a>
+
+            <div class="profile-heading">
+                <h1>My Student Profile</h1>
+                <p>Manage your personal and academic information.</p>
+            </div>
+
+            <section class="profile-card">
+                <div class="profile-avatar" id="profileAvatar">S</div>
+                <h2 class="profile-name" id="displayName">Student Profile</h2>
+
+                <form id="profileForm">
+                    <div class="profile-form">
+
+                        <div class="profile-field">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName"
+                                placeholder="Enter your full name" disabled>
+                        </div>
+
+                        <div class="profile-field">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email"
+                                placeholder="Enter your email" disabled>
+                        </div>
+
+                        <div class="profile-field full-width">
+                            <label for="college">College Name</label>
+                            <input type="text" id="college"
+                                placeholder="Enter your college name" disabled>
+                        </div>
+
+                        <div class="profile-field">
+                            <label for="branch">Branch</label>
+                            <input type="text" id="branch"
+                                placeholder="e.g. Electronics and Communication" disabled>
+                        </div>
+
+                        <div class="profile-field">
+                            <label for="year">Academic Year</label>
+                            <select id="year" disabled>
+                                <option value="">Select year</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+
+                        <div class="profile-field full-width">
+                            <label for="skills">Skills</label>
+                            <textarea id="skills"
+                                placeholder="e.g. C++, Python, HTML, CSS"
+                                disabled></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="profile-actions">
+                        <button type="button" class="profile-btn edit-btn"
+                            id="editBtn">Edit Profile</button>
+
+                        <button type="submit" class="profile-btn save-btn"
+                            id="saveBtn" hidden>Save Changes</button>
+
+                        <button type="button" class="profile-btn cancel-btn"
+                            id="cancelBtn" hidden>Cancel</button>
+                    </div>
+
+                    <p class="profile-message" id="profileMessage"
+                        aria-live="polite"></p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const fields = [
+            "fullName",
+            "email",
+            "college",
+            "branch",
+            "year",
+            "skills"
+        ];
+
+        const form = document.getElementById("profileForm");
+        const editBtn = document.getElementById("editBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+        const message = document.getElementById("profileMessage");
+
+        function getProfile() {
+            return JSON.parse(localStorage.getItem("campusHubProfile") || "{}");
+        }
+
+        function loadProfile() {
+            const profile = getProfile();
+
+            fields.forEach(function(field) {
+                document.getElementById(field).value = profile[field] || "";
+            });
+
+            updateProfileHeading();
+        }
+
+        function updateProfileHeading() {
+            const name = document.getElementById("fullName").value.trim();
+            document.getElementById("displayName").textContent =
+                name || "Student Profile";
+
+            document.getElementById("profileAvatar").textContent =
+                name ? name.charAt(0).toUpperCase() : "S";
+        }
+
+        function setEditing(isEditing) {
+            fields.forEach(function(field) {
+                document.getElementById(field).disabled = !isEditing;
+            });
+
+            editBtn.hidden = isEditing;
+            saveBtn.hidden = !isEditing;
+            cancelBtn.hidden = !isEditing;
+        }
+
+        editBtn.addEventListener("click", function() {
+            message.textContent = "";
+            setEditing(true);
+        });
+
+        cancelBtn.addEventListener("click", function() {
+            loadProfile();
+            setEditing(false);
+            message.textContent = "";
+        });
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const profile = {};
+
+            fields.forEach(function(field) {
+                profile[field] = document.getElementById(field).value.trim();
+            });
+
+            localStorage.setItem("campusHubProfile", JSON.stringify(profile));
+
+            updateProfileHeading();
+            setEditing(false);
+            message.textContent = "Profile saved successfully!";
+        });
+
+        loadProfile();
+    </script>
+</body>
+</html>
